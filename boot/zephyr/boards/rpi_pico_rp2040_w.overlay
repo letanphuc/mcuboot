@@ -1,0 +1,29 @@
+&flash0 {
+	partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			/* Reserved memory for the second stage bootloader */
+			second_stage_bootloader: partition@0 {
+				label = "second_stage_bootloader";
+				reg = <0x00000000 0x100>;
+				read-only;
+			};
+
+			boot_partition: partition@100 {
+				label = "mcuboot";
+				reg = <0x100 0x20000>; /* 128KB */
+			};
+
+			slot0_partition: partition@20100 {
+				label = "image-0";
+				reg = <0x20100 0xF8000>; /* (2MB - 128KB) / 2 = 960KB */
+			};
+
+			slot1_partition: partition@11F100 {
+				label = "image-1";
+				reg = <0x11F100 0xF8000>; /* 960KB */
+			};
+	};
+};
